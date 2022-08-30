@@ -1,5 +1,14 @@
-const data =[
-    { id: 1, Status: "new", Arrival_Time: 0,Execue_Time : 0,Waitting_Time : 0 ,Terminate : 0 },
-  
-]
-let components = [] 
+import React, { createContext } from "react";
+
+
+const Cont = createContext();
+
+
+class App extends React.Component{
+    constructor(props){
+        super(props);
+        this.state ={
+            rows:[]
+        };
+    }
+}
