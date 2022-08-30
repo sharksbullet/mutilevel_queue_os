@@ -9,16 +9,23 @@ const Tablequeueu = () => {
     <table className="table table-dark table-borderless">
   <thead>
     <tr>
-      <th >ID	</th>
+      <th >ID</th>
       <th >Status</th>
       <th >Arrival Time</th>
-      <th >Execue Time	</th>
-      <th >Waitting Time	</th>
+      <th >Execue Time</th>
+      <th >Waitting Time</th>
       <th >Terminate</th>
     </tr>
   </thead>
   <tbody>
-   
+   <tr>
+    <td>1</td>
+    <td>new</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+    <td>0</td>
+   </tr>
   </tbody>
 </table>
 <p className="text">CPU Clock :</p>
