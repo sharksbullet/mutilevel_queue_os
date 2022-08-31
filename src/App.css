@@ -228,6 +228,29 @@ table {
   background-color: #2b5df2;
   border-color: #2b5df2;
 }
+select:disabled {
+  opacity: 1;
+}
+button:not(:disabled),
+[type=button]:not(:disabled),
+[type=reset]:not(:disabled),
+[type=submit]:not(:disabled) {
+  cursor: pointer;
+}
+.form-control[type=file]:not(:disabled):not([readonly]) {
+  cursor: pointer;
+}
+.form-control:hover:not(:disabled):not([readonly])::-webkit-file-upload-button {
+  background-color: #dde0e3;
+}
+.form-control:hover:not(:disabled):not([readonly])::file-selector-button {
+  background-color: #dde0e3;
+}
+.btn:disabled, .btn.disabled, fieldset:disabled .btn {
+  pointer-events: none;
+  opacity: 0.65;
+}
+
 :root{
   --color-jojo :rgb(239, 128, 128);
   --color-shark : rgb(57, 201, 245);
