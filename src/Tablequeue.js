@@ -24,7 +24,7 @@ const Tablequeueu = () => {
     <td>0</td>
     <td>0</td>
     <td>0</td>
-    <td>0</td>
+    <td><button class="btn btn-danger" disabled>Terminate</button></td>
    </tr>
   </tbody>
 </table>
