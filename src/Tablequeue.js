@@ -23,7 +23,7 @@ const Tablequeueu = (props) => {
     <td>new</td>
     <td>0</td>
     <td>0</td>
-    <td>0</td>
+    <td>00000000</td>
     <td><button class="btn btn-danger" disabled>Terminate</button></td>
    </tr>
   </tbody>
