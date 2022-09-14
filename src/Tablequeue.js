@@ -1,7 +1,7 @@
 import React from 'react'
 
-const Tablequeueu = () => {
-  
+const Tablequeueu = (props) => {
+    const{addProcess,allProcess,process}=props;
   return (
     <div className="table-q">
     <h2 className="h2">Mutilevel Queue</h2>
