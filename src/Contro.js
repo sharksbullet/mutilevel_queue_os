@@ -8,9 +8,28 @@ const Contro = (props) => {
     const [clock,setClock]=useState(0);
     const [allprocess, setAllprocess] = useState(0);
     const [terminate, setTerminate] = useState([])
-
     const random = (min,max)=>{
         return Math.floor(Math.random()*(min-max+1)+min);
+    }
+    const addPro =()=>{
+        count++;
+        let cpu = [...process];
+        let ran = random(1,20);
+        cpu.push({process:count,
+            status:"New",
+            at_time:clock,
+            bu_time:ran,
+            ex_time:0,
+            wa_time:0})
+        setAllprocess(count);
+        setProcess(cpu);
+    }
+    const Reset =() =>{
+        setProcess([]);
+        setAllprocess(count=0);
+        setClock(0);
+        setTerminate([]);
+        
     }
     
 
