@@ -7,9 +7,12 @@ const ReadyQueue = () => {
         <table className="table table-dark table-borderless">
   <thead>
     <tr>
-      <th >RR <br></br> Quantum Time = ?</th>
-      <th >FCFS <br></br> Quantum Time = ?</th>
-      
+      <th >RR <br></br> Quantum Time = 10</th>
+      <th >FCFS <br></br> Quantum Time = 10</th>
+    </tr>
+    <tr>
+      <td></td>
+      <td></td>
     </tr>
   </thead>
   <tbody>
