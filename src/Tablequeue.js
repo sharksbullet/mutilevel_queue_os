@@ -6,7 +6,7 @@ const Tablequeueu = () => {
   const process = useContext(Contro);
   const clock = useContext(Contro);
   const allprocess = useContext(Contro);
-  const status = useContext(Contro)
+  const status = useContext(Contro);
   return (
     <div className="table-q">
     <h2 className="h2">Mutilevel Queue</h2>
@@ -23,7 +23,7 @@ const Tablequeueu = () => {
     </tr>
   </thead>
   <tbody>
-  {process?.map((it,index)=>{
+  {process && process.map((it,index)=>{
       return(
         <tr key={index}>
         <td>{it.process}</td>
