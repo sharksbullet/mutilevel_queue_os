@@ -6,7 +6,8 @@ const Tablequeueu = () => {
   const process = useContext(Contro);
   const clock = useContext(Contro);
   const allprocess = useContext(Contro);
-  const status = useContext(Contro);
+  const terminate = useContext(Contro);
+ 
   return (
     <div className="table-q">
     <h2 className="h2">Mutilevel Queue</h2>
@@ -23,15 +24,16 @@ const Tablequeueu = () => {
     </tr>
   </thead>
   <tbody>
-  {process && process.map((it,index)=>{
+  {process?.map((it,index)=>{
       return(
         <tr key={index}>
-        <td>{it.process}</td>
-        <td >{it.st}</td>
-        <td>{it.at_time}</td>
-        <td>{it.bu_time}</td>
-        <td>{it.ex_time}</td>
-        <td>{it.wa_time}</td>
+        <td>{it?.process}</td>
+        <td >{it?.st}</td>
+        <td>{it?.at_time}</td>
+        <td>{it?.bu_time}</td>
+        <td>{it?.ex_time}</td>
+        <td>{it?.wa_time}</td>
+        <td>{it?.ter_q}</td>
         
         </tr>
       )
@@ -42,9 +44,9 @@ const Tablequeueu = () => {
    </tr>
   </tbody>
 </table>
-<p className="text">CPU Clock :{clock}</p>
-<p className="text one">CPU Process :{allprocess}</p>
-<p className="text two">AVG Waitting Time :</p>
+<p className="text">CPU Clock : 0 {clock}</p>
+<p className="text one">CPU Process : 0 {allprocess}</p>
+<p className="text two">AVG Waitting Time : 0</p>
 <button type="button" class="btn btn-danger">Restart</button>
 
 

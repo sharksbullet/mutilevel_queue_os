@@ -1,12 +1,13 @@
 import React, { createContext,useState,useEffect } from 'react';
-
 let Count=0;
 let tQuantum =5;
 const Controller = createContext();
+
 const Contro = (props) => {
     const [process, setProcess] = useState([]);
     const [clock,setClock]=useState(0);
-    const [readyrobin, setReadyRobin] = useState([]);
+    const [readyRobin, setReadyRobin] = useState([]);
+    const [readyFcfs, setReadyFcfs] = useState([]);
     const [allprocess, setAllprocess] = useState(0);
     const [terminate, setTerminate] = useState([]);
     const random = (min,max)=>{
@@ -33,44 +34,59 @@ const Contro = (props) => {
         setTerminate([]);
         
     };
-    const Statu = (va)=>{
-        if (va === 'New') {
-            console.log("New");
-        }else if (va === 'Running') {
-            console.log("Running");
-        }else if (va === 'Terminate') {
-            console.log("Terminate");
+    const Statu = (value) => {
+        if (value === 'New') {
+          console.log('New');
+        } else if (value === 'Running') {
+          console.log('Running');
+        } else if (value === 'Terminate') {
+          console.log('Terminate');
+        } else if (value === 'Ready') {
+          console.log('Ready');
         }
-
-    }
+      }
     useEffect(() => {
-        if ( process.length !== 0) {
-            for (let i = 0; i < tQuantum; i++) {
-                if ( i===0 && process.ex_time < process.bu_time) {
-                    process.status = "Run";
-                    process.ex_time++;
-                }
-            for (let i = 0; i < process.length; i++) {
-                if (i=== 0 && 
-                    process[0].ex_time == tQuantum &&
-                    process[0].status=== "Run") {
-                    let robin = [...readyrobin];
-                    process[0].status = "Ready";
-                    
-                }
-                
-             }
+        if (process.length !== 0) {
+          for (let i = 0; i < tQuantum; i++) {
+            if (i === 0 && process[0].execu_time < process[0].burst_time) {
+              process[0].status = "Running"
+              process[0].execu_time++
             }
+          }
+          for (let i = 0; i < process.length; i++) {
+            if (i === 0 && process[0].execu_time === tQuantum && process[0].status === "Running") {
+              let ready_q = [...readyRobin]
+              process[0].status = "Ready"
+              setTimeout(() => {
+                ready_q.push(process[0])
+                setReadyRobin(ready_q)
+                process.splice(0, 1)
+              }, 500);
+    
+            }
+            else if (i !== 0) {
+              process[i].status = "Ready"
+              process[i].wait_time++
+            }
+    
+            else if (process[0].execu_time === process[0].burst_time) {
+              let ter_q = [...terminate]
+              process[0].status = "Terminate"
+              ter_q.push(process[0])
+              setTimeout(() => {
+                setTerminate(ter_q)
+                setAllprocess(process.length - 1)
+                process.splice(0, 1)
+              }, 500);
+            }
+          }
         }
-        else{
-            setProcess(readyrobin);
-            setReadyRobin([]);
-
+        else {
+          setProcess(readyRobin)
+          setReadyRobin([])
         }
-      return () => {
-        
-      };
-    }, [clock])
+    
+      }, [])
 
     useEffect(() => {
         const id = setInterval(() => {
@@ -86,9 +102,11 @@ const Contro = (props) => {
         clock,
         allprocess,
         terminate,
+        readyRobin,
         Statu,
         addPro,
         Reset,
+        setReadyRobin,
         setTerminate,
         setAllprocess,
         setClock,
