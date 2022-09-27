@@ -1,17 +1,21 @@
 import React, { createContext,useState,useEffect } from 'react';
+import ReadyQueue from './ReadyQueue';
+import Tablequeueu from './Tablequeue';
 let Count=0;
 let tQuantum =5;
 const Controller = createContext();
 
-const Contro = (props) => {
+const Contro = () => {
     const [process, setProcess] = useState([]);
     const [clock,setClock]=useState(0);
     const [readyRobin, setReadyRobin] = useState([]);
     const [readyFcfs, setReadyFcfs] = useState([]);
+    const [average , setAverage] = useState(0);
     const [allprocess, setAllprocess] = useState(0);
     const [terminate, setTerminate] = useState([]);
+    console.log('process', process)
     const random = (min,max)=>{
-        return Math.floor(Math.random()*(min-max+1)+min);
+        return Math.floor(Math.random()*(max-min+1)+min);
     };
     
     const addPro =()=>{
@@ -34,51 +38,37 @@ const Contro = (props) => {
         setTerminate([]);
         
     };
-    const Statu = (value) => {
-        if (value === 'New') {
-          console.log('New');
-        } else if (value === 'Running') {
-          console.log('Running');
-        } else if (value === 'Terminate') {
-          console.log('Terminate');
-        } else if (value === 'Ready') {
-          console.log('Ready');
-        }
-      }
+    const avgtime = ()=>{
+      let avg = [average]
+      avg.push({wa_time:process})
+      setAverage(avg)
+    }
     useEffect(() => {
         if (process.length !== 0) {
           for (let i = 0; i < tQuantum; i++) {
-            if (i === 0 && process[0].execu_time < process[0].burst_time) {
+            if (i === 0 && process[0].ex_time < process[0].bu_time) {
               process[0].status = "Running"
-              process[0].execu_time++
+              process[0].ex_time++
             }
           }
           for (let i = 0; i < process.length; i++) {
-            if (i === 0 && process[0].execu_time === tQuantum && process[0].status === "Running") {
+            if (i === 0 && process[0].ex_time === tQuantum && process[0].status === "Running") {
               let ready_q = [...readyRobin]
               process[0].status = "Ready"
-              setTimeout(() => {
                 ready_q.push(process[0])
                 setReadyRobin(ready_q)
-                process.splice(0, 1)
-              }, 500);
-    
             }
             else if (i !== 0) {
               process[i].status = "Ready"
-              process[i].wait_time++
+              process[i].wa_time++
             }
     
-            else if (process[0].execu_time === process[0].burst_time) {
+            else if (process.ex_time === process.bu_time) {
               let ter_q = [...terminate]
               process[0].status = "Terminate"
               ter_q.push(process[0])
-              setTimeout(() => {
-                setTerminate(ter_q)
-                setAllprocess(process.length - 1)
-                process.splice(0, 1)
-              }, 500);
             }
+
           }
         }
         else {
@@ -86,36 +76,29 @@ const Contro = (props) => {
           setReadyRobin([])
         }
     
-      }, [])
-
+      }, [clock])
+    
     useEffect(() => {
-        const id = setInterval(() => {
-            setClock(clock + 1);
-        }, 1000);
-      return () => clearInterval(id) 
-    }, []);
+        setTimeout(()=>{
+          setClock(clock+1)
+        },1000)
+    }, [clock]);
 
   return (
-    <Controller.Provider
-    value={{
-        process,
-        clock,
-        allprocess,
-        terminate,
-        readyRobin,
-        Statu,
-        addPro,
-        Reset,
-        setReadyRobin,
-        setTerminate,
-        setAllprocess,
-        setClock,
-        setProcess,
-    }}
-    >
-        {props.children}
-    </Controller.Provider>
+   <>
+    <Tablequeueu
+     clock={clock}
+        process={process}
+        addPro={addPro}
+        Reset={Reset}
+        allprocess={allprocess}
+        terminate={terminate}
+        readyRobin={readyRobin}
+        avgtime={avgtime}
+    />
+   
+   </>
   );
 };
 
-export  {Controller,Contro};
+export  default Contro;

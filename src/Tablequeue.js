@@ -1,23 +1,20 @@
-import React,{useContext} from 'react'
-import { Contro } from './Contro'
+import React,{useContext,useState} from 'react'
 
-const Tablequeueu = () => {
-  const addPro = useContext(Contro);
-  const process = useContext(Contro);
-  const clock = useContext(Contro);
-  const allprocess = useContext(Contro);
-  const terminate = useContext(Contro);
- 
+
+const Tablequeueu = (props) => {
+  const {avgtime,clock,process,addPro,Reset,allprocess,Statu,terminate}=props;
+
   return (
     <div className="table-q">
     <h2 className="h2">Mutilevel Queue</h2>
-    <button type="button" class="btn btn-primary" onClick={()=>addPro("cpu")}>Add process & Start</button>
+    <button type="button" className="btn btn-primary" onClick={addPro}>Add process & Start</button>
     <table className="table table-dark table-borderless">
   <thead>
     <tr>
       <th >ID</th>
       <th >Status</th>
       <th >Arrival Time</th>
+      <th>Burst Time</th>
       <th >Execue Time</th>
       <th >Waitting Time</th>
       <th >Terminate</th>
@@ -28,7 +25,7 @@ const Tablequeueu = () => {
       return(
         <tr key={index}>
         <td>{it?.process}</td>
-        <td >{it?.st}</td>
+        <td >{it?.status}</td>
         <td>{it?.at_time}</td>
         <td>{it?.bu_time}</td>
         <td>{it?.ex_time}</td>
@@ -44,10 +41,10 @@ const Tablequeueu = () => {
    </tr>
   </tbody>
 </table>
-<p className="text">CPU Clock : 0 {clock}</p>
-<p className="text one">CPU Process : 0 {allprocess}</p>
-<p className="text two">AVG Waitting Time : 0</p>
-<button type="button" class="btn btn-danger">Restart</button>
+<p className="text">CPU Clock : {clock}</p>
+<p className="text one">CPU Process :{allprocess}</p>
+<p className="text two">AVG Waitting Time : {avgtime}</p>
+<button type="button" className="btn btn-danger" onClick={Reset}>Restart</button>
 
 
     </div>
