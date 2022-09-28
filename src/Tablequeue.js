@@ -2,8 +2,8 @@ import React,{useContext,useState} from 'react'
 
 
 const Tablequeueu = (props) => {
-  const {avgtime,clock,process,addPro,Reset,allprocess,Statu,terminate}=props;
-
+  const {clock,process,addPro,Reset,allprocess}=props;
+  
   return (
     <div className="table-q">
     <h2 className="h2">Mutilevel Queue</h2>
@@ -43,7 +43,7 @@ const Tablequeueu = (props) => {
 </table>
 <p className="text">CPU Clock : {clock}</p>
 <p className="text one">CPU Process :{allprocess}</p>
-<p className="text two">AVG Waitting Time : {avgtime}</p>
+<p className="text two">AVG Waitting Time :</p>
 <button type="button" className="btn btn-danger" onClick={Reset}>Restart</button>
 
 

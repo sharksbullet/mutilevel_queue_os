@@ -1,7 +1,7 @@
 import React,{useContext} from 'react'
 import { Contro } from './Contro'
 const ReadyQueue = (props) => {
-  const {readyRobin}=props;
+  const {readyFcfs,readyRobin}=props;
   
   return (
     <div className="tebla-q ready">
@@ -14,6 +14,7 @@ const ReadyQueue = (props) => {
       <th >Execution Time </th>
       <th >Burst Time </th>
       <th >Arival Time</th>
+      <th >Turn around time</th>
     </tr>
    
   </thead>
@@ -24,7 +25,8 @@ const ReadyQueue = (props) => {
       <td>{it?.process}</td>
       <td>{it?.ex_time}</td>
       <td>{it?.bu_time}</td>
-      <td>{it?.at_time}</td>  
+      <td>{it?.at_time}</td> 
+      <td>{it?.bu_time+it?.ex_time}</td>  
      </tr>
     )
   })}
@@ -40,10 +42,16 @@ const ReadyQueue = (props) => {
     </tr>
   </thead>
   <tbody>
-  <tr>
-      <td></td>
-       
-  </tr>
+  {readyFcfs?.map((it,index)=>{
+    return(
+      <tr key={index}>
+      <td>{it?.process}</td>
+      <td>{it?.bu_time}</td>
+      <td>{it?.wa_time}</td>
+      <td>{it?.tat}</td>
+    </tr>
+    )
+  })}
   </tbody>
 </table>
     </div>
