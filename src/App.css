@@ -90,6 +90,7 @@ table {
 }
 .h2{
   color: var(--color-jojo);
+  text-align: center;
 }
 .table-borderless > :not(caption) > * > * {
   border-bottom-width: 0;

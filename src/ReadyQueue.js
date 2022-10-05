@@ -25,8 +25,9 @@ const ReadyQueue = (props) => {
       <td>{it?.process}</td>
       <td>{it?.ex_time}</td>
       <td>{it?.bu_time}</td>
-      <td>{it?.at_time}</td> 
-      <td>{it?.bu_time+it?.ex_time}</td>  
+      <td>{it?.at_time}</td>
+      <td>{it?.ex_time-it?.process}</td>
+       
      </tr>
     )
   })}
@@ -42,7 +43,7 @@ const ReadyQueue = (props) => {
     </tr>
   </thead>
   <tbody>
-  {readyFcfs?.map((it,index)=>{
+  {/* {readyFcfs?.map((it,index)=>{
     return(
       <tr key={index}>
       <td>{it?.process}</td>
@@ -51,9 +52,10 @@ const ReadyQueue = (props) => {
       <td>{it?.tat}</td>
     </tr>
     )
-  })}
+  })} */}
   </tbody>
 </table>
+  
     </div>
   )
 }

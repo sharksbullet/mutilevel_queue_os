@@ -44,32 +44,34 @@ const Contro = () => {
     useEffect(() => {
         if (process.length !== 0) {
           for (let i = 0; i < tQuantum; i++) {
-            if (i === 0 && process[0].ex_time < process[0].bu_time) {
+            if (i === 0 && process[0].ex_time < process[0].bu_time && process[0].status !=="Waiting") {
               process[0].status = "Running"
               process[0].ex_time++
             }
+            else{
+            }
           }
-          
           for (let i = 0; i < process.length; i++) {
             if (i === 0 && process[0].ex_time === tQuantum && process[0].status === "Running") {
               let ready_q = [...readyRobin]
               process[0].status = "Ready"
-              ready_q.push(process[0])
+                ready_q.push(process[0])
                 setReadyRobin(ready_q)
                 process.splice(0,1)
+              
             }
             else if (i !== 0) {
               process[i].status = "Ready"
               process[i].wa_time++
             }
-            else if (process.ex_time === process.bu_time) {
-              let ter_q = [...terminate]
-              process[0].status = "Terminate"
-                 ter_q.push(process[0])
-                setTerminate(ter_q)
-               
-            }
             
+            else if (process[0].ex_time === process[0].bu_time) {
+              let run = [...readyFcfs]
+              process[0].status = "Terminate"
+              run.push(process[0])
+              setReadyFcfs(run)
+             
+            }
           }
         }
         else {
@@ -79,24 +81,7 @@ const Contro = () => {
         }
     
       }, [clock])
-      useEffect(() => {
-        if (process.length !==0 ) {
-          for (let i = 0; i < process.length; i++) {
-            if (i===0 && process[i].bu_time+process[i].wa_time && process[0].status === "Runing") {
-             let tat = [...readyFcfs]
-             process[0].status ="Ready"
-             tat.push(process[0])
-             setReadyFcfs(tat)
-             
-            }
-          
-         }
-        }
-        else{
-          setProcess(readyFcfs)
-          setReadyFcfs([])
-        }
-      }, [clock])
+      
 
     useEffect(() => {
         setTimeout(()=>{
