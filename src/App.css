@@ -99,7 +99,7 @@ table {
   border-top-width: 0;
 }
 .table-dark {
-  --bs-table-bg: #f96cc1;
+  --bs-table-bg: #119f2e;
   --bs-table-striped-bg: #3e444a;
   --bs-table-striped-color: #fff;
   --bs-table-active-bg: #484e53;

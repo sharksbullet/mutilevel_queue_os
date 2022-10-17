@@ -3,14 +3,15 @@ import React, { createContext,useState,useEffect } from 'react';
 import ReadyQueue from './ReadyQueue';
 import Tablequeueu from './Tablequeue';
 let Count=0;
-let tQuantum =0.80;
+let tQuantum =5;
 let itime = 0  ;
 let index =0;
-
+let set =0.80;
 const Controller = createContext();
 const Contro = () => {
     const [process, setProcess] = useState([]);
     const [clock,setClock]=useState(0);
+    const [readyRobin,setReadyRobin] = useState([]);
     const [readyFcfs, setReadyFcfs] = useState([]);
     const [allprocess, setAllprocess] = useState(0);
     const [terminate, setTerminate] = useState([]);
@@ -18,6 +19,7 @@ const Contro = () => {
     const random = (min,max)=>{
         return Math.floor(Math.random()*(max-min+1)+min);
     };
+    
    function Awg() {
     let sum = 0,ct = 0;
     if (process.length !== 0) {
@@ -30,10 +32,23 @@ const Contro = () => {
       }
     }
    }
+   function Ready(){
+    let readys = [...readyRobin]
+    let p = 0.80;
+    if (process.length !== 0) {
+      for (let g = 0; g < process.length; g++) {
+       if (tQuantum === process[g].ex_time &&process[g].status === "Ready") {
+        readys.push(process[g])
+       } 
+        process.sort((a,b)=>a.bu_time-b.bu_time)
+        setReadyRobin(readys)
+      }
+    }
+   }
     const addPro =()=>{
       Count++;
       let cpu = [...process];
-      let ran = random(3,15);
+      let ran = random(3,30);
       cpu.push({process:Count,
       status:'New',
       at_time:clock,
@@ -68,18 +83,20 @@ const Contro = () => {
                 }
                 else if (process[i].status === "Ready") {
                     process[i].wa_time++
-
+                    
                 }
                 else if (process[i].status === "New") {
                   process[i].status = "Ready"
                 }
 
             }
-            process.sort((a,b)=>a.bu_time-b.bu_time)
+
+           
              if (process[index].state === 0) {
-              if (itime < Math.round(process[index].bu_time*tQuantum ) ) { 
+              if (itime < tQuantum ) { 
                 process[index].status = "Running"
-                 itime++             
+                 itime++
+                 Ready()         
               }
               else{
                 itime=0
@@ -95,6 +112,7 @@ const Contro = () => {
                   index = 0
                 }
               }
+              
              }
             else if (process[index].state === 1) {
               process[index].status = "Running"
@@ -110,6 +128,7 @@ const Contro = () => {
           
          }
          Awg()
+         
       }, [clock])
       
 
@@ -137,6 +156,7 @@ const Contro = () => {
     terminate={terminate}
     readyFcfs={readyFcfs}
     addPro={addPro}
+    readyRobin={readyRobin}
    />
    </>
   );
