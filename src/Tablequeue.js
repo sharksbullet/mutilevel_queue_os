@@ -7,7 +7,6 @@ const Tablequeueu = (props) => {
   return (
     <div className="table-q">
     <h2 className="h2">Mutilevel Queue</h2>
-    
     <button type="button" className="btn btn-primary" onClick={addPro}>Add process & Start</button>
     <table className="table table-dark table-borderless">
   <thead>

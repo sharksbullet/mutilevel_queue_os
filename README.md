@@ -1,70 +1,29 @@
-# ยังไม่เสดนะเหลือตัวระบบ
+แบ่ง viwe เป็นสองส่วนมี ไฟล์Tablequeueu , ReadyQueue
+คอนมี 1 ไฟล์
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Tablequeueu
+button เรียกใช้ฟังชั้น addPro เมื่อมีการกดให้มันส่งค่าไปที่ฟังชั้น
+ส่วนของตาราง tbody เรียกใช้ ฟังชั้น process ให้ลูป map ส่วนของ นี้เรียกใช้?โอเปอเรชั้น รับพารามา 2 ตัวคือตัว it กับ index
+ให้ tr index เป็นคีย์เข้ามา
+ละก็เรียกใช้ตัวแปรต่างๆ
 
-## Available Scripts
+const รับฟังชั้นawg,clock,process,addPro,Reset,allprocessส่วนของไฟล์Tablequeueu
+แท็ค p CPU Clock รับฟังชั้น clock มา
+แท็ค p CPU Process  รับฟังชั้น allprocess มา
+แท็ค p AVG Waitting Time  รับฟังชั้น awg มา
 
-In the project directory, you can run:
+button เรียกใช้ฟังชั้นเมื่อมีการกด Reset 
+ไฟล์ReadyQueue
+const รับฟังชั้น process,readyRobin จากไฟล์คอนมาใช้งาน
+ส่วนของ tbody รับฟังชั้น readyRobin มาลูป map รับพารามาสองตัวคือ it,index
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+เงื่อนไขถ้า state เท่ากับ 0ให้
+รับ index เป็นคีย์
+ให้วนลูปmap
+โชว์ตัว Process
+ถัดมาตารางFCFS
+รับฟังชั้นProcessมาลูป mapรับพารามาสองตัวคือ it,index
+เงื่อนไขถ้า state เท่ากับ 1ให้
+รับ index เป็นคีย์
+ให้วนลูปmap
+โชว์ตัว Process

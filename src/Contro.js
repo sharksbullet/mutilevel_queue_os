@@ -12,10 +12,9 @@ const Contro = () => {
     const [process, setProcess] = useState([]);
     const [clock,setClock]=useState(0);
     const [readyRobin,setReadyRobin] = useState([]);
-    const [readyFcfs, setReadyFcfs] = useState([]);
     const [allprocess, setAllprocess] = useState(0);
-    const [terminate, setTerminate] = useState([]);
     const [awg,setAwg]=useState(0);
+    //ran
     const random = (min,max)=>{
         return Math.floor(Math.random()*(max-min+1)+min);
     };
@@ -32,9 +31,10 @@ const Contro = () => {
       }
     }
    }
-  function add() {
+   //function addprocess 
+  function add() { 
     Count++;
-    let cpu = [...process];
+      let cpu = [...process];
       let ran = random(10,20);
       cpu.push({process:Count,
       status:'New',
@@ -43,43 +43,46 @@ const Contro = () => {
       ex_time:0,
       wa_time:0,
       state:0
-      
       })
-      
       setAllprocess(Count);
       setProcess(cpu);
   }
-
-  function addnew(p) {
+// add rounrobinqueue พารารับมา 1 ตัว p
+  function addreadyR(p) {
     let readyrobin_q = [...process]
     readyrobin_q.push(p)
     setReadyRobin(readyrobin_q)
   }
+  //ถ้ากดปุ่มแอดเรียกพวกนี้ เหตุที่ใช้ asyncกับawait ให้มันทำงานแบบซิโคนัด อยากให้ทำงานเป็นลำดับขั้นทีละบันทัด
     const addPro = async ()=>{
      await add() 
-     await addnew(process)
-      
+     await addreadyR(process)
     };
-  
+  //ปุ่ม Reset ให้มันกำหนดค่าว่าง
     const Reset =() =>{
         setProcess([]);
         setAllprocess(Count=0);
         setClock(0);
-        setTerminate([]);
+       
         
     };
-   
+   //ให้ทำไรบ้าง
     useEffect(() => {
+      //เช็คว่าถ้าไม่มี process ถ้ามี process ให้เริ่มทำ
         if (process.length !== 0) {
+          //เช็คว่าถ้าตัวชี้ตำแหน่งของตัวสุดท้ายให้กลับไปเริ่มใหม่
           if (index === process.length) {
               index =0
           }
+          //เช็คถ้า status มันไม่เท่ากับ Terminate
           if (process[index].status !== "Terminate") {
+            //ให้ลูปนับเวลา
             for (let i = 0; i < process.length; i++) {  
-
+              //เช็คว่าถ้า status มันเท่ากับ Running,Ready บวกเวลาไปเรื่อยๆ ถ้าเป็น new ก็ให้เป็น Ready ทั้งหมด
                 if (process[i].status === "Running") {
                     process[i].ex_time++
                 }
+                
                 else if (process[i].status === "Ready") {
                     process[i].wa_time++
                     
@@ -88,57 +91,63 @@ const Contro = () => {
                   process[i].status = "Ready"
                 }
             }
-          
+            //เช็คว่าถ้า state เป็น 0 , stateตอนเป็นราวโรบิน
              if (process[index].state === 0) {
+              //เช็คนับว่าเวลา tQuantum ถ้าถึง 5
               if (itime < tQuantum ) { 
                 process[index].status = "Running"
                  itime++
+                 //เช็คว่าเป็น80เปอของเวลาแล้วหรือยังถึงแล้วก็ให้ไปตัวถัดไปแล้วก็ชิฟ ออก
                  if (process[index].ex_time === Math.round(process[index].bu_time*set)) {
                   process[index].state = 1
                   readyRobin.shift()
                 }
               }
-              
+              //ถ้าไม่ใช้คือว่าtQuantumทำถึงเวลาที่กำหนด
               else{
                 itime=0
                   readyRobin.shift()
                   readyRobin.push(process[index])
                   process[index].status = "Ready"
+                //ลบราวทิ้งให้ไปทำใหม่
                 if (index < process.length - 1) {
                   index++
                 }
+
                 else{
                   index = 0
                 }
-                
-                
               }
              }
+             //ถ้า state เท่ากับ 1 ให้มัน Running
             else if (process[index].state === 1) {
               process[index].status = "Running"
+              //ถ้า Burst Time เท่ากับ Execue Time	ให้มัน Terminate 
               if (process[index].ex_time === process[index].bu_time) {
                     process[index].status = "Terminate"
                     process[index].state = 2
-                    readyFcfs.shift()
+                  
               }
             }
           }
+          //ถ้าไม่ใช้ ก็ให้ index บวกไปเรื่อยๆ
           else{
             index++
           }
           
          }
+         //เรียกใช้ function AVG Waitting Time
          Awg()
          
       }, [clock])
       
-
+      //นี้ให้นับเวลา clock 
     useEffect(() => {
         setTimeout(()=>{
           setClock(clock+1)
         },500)
     }, [clock]);
-
+//ส่งค่ากลับ ไฟล์Tablequeueu,ReadyQueue และ ก็ส่งค่า function ไปให้
   return (
    <>
     <Tablequeueu
@@ -147,15 +156,12 @@ const Contro = () => {
         addPro={addPro}
         Reset={Reset}
         allprocess={allprocess}
-        terminate={terminate}
         awg={awg}
         
     />
    <ReadyQueue
     clock={clock}
     process={process}
-    terminate={terminate}
-    readyFcfs={readyFcfs}
     addPro={addPro}
     readyRobin={readyRobin}
    />

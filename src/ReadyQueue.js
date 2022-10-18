@@ -1,7 +1,7 @@
 import React,{useContext} from 'react'
 import { Contro } from './Contro'
 const ReadyQueue = (props) => {
-  const {process,addPro,readyFcfs,readyRobin}=props;
+  const {process,addPro,readyRobin}=props;
   
   return (
     <div className="tebla-q ready">
