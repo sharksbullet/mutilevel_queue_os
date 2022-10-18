@@ -6,7 +6,7 @@ const ReadyQueue = (props) => {
   return (
     <div className="tebla-q ready">
         <h2 className="h2">Ready Queue</h2>
-        <p className="text">Time Quantum = 10</p>
+        <p className="text">Time Quantum = 5</p>
         <table className="table table-dark table-borderless">
   <thead>
     <tr>
@@ -16,7 +16,8 @@ const ReadyQueue = (props) => {
    
   </thead>
   <tbody>
-  {readyRobin?.map((it,index)=>{
+  {process?.map((it,index)=>{
+    
     if(it?.state === 0){
       return (
             <tr key={index}>
@@ -37,11 +38,15 @@ const ReadyQueue = (props) => {
   </thead>
   <tbody>
   {readyFcfs?.map((it,index)=>{
-    return(
+    if(it?.state === 1){
+      return(
       <tr key={index}>
       <td>{it?.process}</td>
-    </tr>
+      </tr>
     )
+    }
+    else{}
+    
   })}
   </tbody>
 </table>

@@ -32,23 +32,23 @@ const Contro = () => {
       }
     }
    }
-   function Ready(){
-    let readys = [...readyRobin]
-    let p = 0.80;
-    if (process.length !== 0) {
-      for (let g = 0; g < process.length; g++) {
-       if (tQuantum === process[g].ex_time &&process[g].status === "Ready") {
-        readys.push(process[g])
-       } 
-        process.sort((a,b)=>a.bu_time-b.bu_time)
-        setReadyRobin(readys)
-      }
-    }
-   }
+  //  function Ready(){
+  //   let readys = [...readyRobin]
+  //   let p = 0.80;
+  //   if (process.length !== 0) {
+  //     for (let g = 0; g < process.length; g++) {
+  //      if (tQuantum === process[g].ex_time && process[g].status === "Ready") {
+  //       readys.push(process[g])
+  //      } 
+  //       process.sort((a,b)=>a.bu_time-b.bu_time)
+  //       setReadyRobin(readys)
+  //     }
+  //   }
+  //  }
     const addPro =()=>{
       Count++;
       let cpu = [...process];
-      let ran = random(3,30);
+      let ran = random(10,20);
       cpu.push({process:Count,
       status:'New',
       at_time:clock,
@@ -88,15 +88,12 @@ const Contro = () => {
                 else if (process[i].status === "New") {
                   process[i].status = "Ready"
                 }
-
             }
-
-           
+            process.sort((a,b)=>a.bu_time-b.bu_time)
              if (process[index].state === 0) {
               if (itime < tQuantum ) { 
                 process[index].status = "Running"
                  itime++
-                 Ready()         
               }
               else{
                 itime=0
@@ -115,6 +112,8 @@ const Contro = () => {
               
              }
             else if (process[index].state === 1) {
+              process.sort((a,b)=>a.process-b.process)
+              readyFcfs.sort((a,b)=>a.process-b.process)
               process[index].status = "Running"
               if (process[index].ex_time === process[index].bu_time) {
                     process[index].status = "Terminate"
