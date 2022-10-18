@@ -32,22 +32,9 @@ const Contro = () => {
       }
     }
    }
-  //  function Ready(){
-  //   let readys = [...readyRobin]
-  //   let p = 0.80;
-  //   if (process.length !== 0) {
-  //     for (let g = 0; g < process.length; g++) {
-  //      if (tQuantum === process[g].ex_time && process[g].status === "Ready") {
-  //       readys.push(process[g])
-  //      } 
-  //       process.sort((a,b)=>a.bu_time-b.bu_time)
-  //       setReadyRobin(readys)
-  //     }
-  //   }
-  //  }
-    const addPro =()=>{
-      Count++;
-      let cpu = [...process];
+  function add() {
+    Count++;
+    let cpu = [...process];
       let ran = random(10,20);
       cpu.push({process:Count,
       status:'New',
@@ -58,8 +45,20 @@ const Contro = () => {
       state:0
       
       })
+      
       setAllprocess(Count);
       setProcess(cpu);
+  }
+
+  function addnew(p) {
+    let readyrobin_q = [...process]
+    readyrobin_q.push(p)
+    setReadyRobin(readyrobin_q)
+  }
+    const addPro = async ()=>{
+     await add() 
+     await addnew(process)
+      
     };
   
     const Reset =() =>{
@@ -89,34 +88,37 @@ const Contro = () => {
                   process[i].status = "Ready"
                 }
             }
-            process.sort((a,b)=>a.bu_time-b.bu_time)
+          
              if (process[index].state === 0) {
               if (itime < tQuantum ) { 
                 process[index].status = "Running"
                  itime++
+                 if (process[index].ex_time === Math.round(process[index].bu_time*set)) {
+                  process[index].state = 1
+                  readyRobin.shift()
+                }
               }
+              
               else{
                 itime=0
-                let readyfcfs_q = [...readyFcfs]
-                readyfcfs_q.push(process[index])
-                setReadyFcfs(readyfcfs_q)
-                process[index].state = 1
-                process[index].status = "Ready"
+                  readyRobin.shift()
+                  readyRobin.push(process[index])
+                  process[index].status = "Ready"
                 if (index < process.length - 1) {
                   index++
                 }
                 else{
                   index = 0
                 }
+                
+                
               }
-              
              }
             else if (process[index].state === 1) {
-              process.sort((a,b)=>a.process-b.process)
-              readyFcfs.sort((a,b)=>a.process-b.process)
               process[index].status = "Running"
               if (process[index].ex_time === process[index].bu_time) {
                     process[index].status = "Terminate"
+                    process[index].state = 2
                     readyFcfs.shift()
               }
             }
@@ -134,7 +136,7 @@ const Contro = () => {
     useEffect(() => {
         setTimeout(()=>{
           setClock(clock+1)
-        },1000)
+        },500)
     }, [clock]);
 
   return (

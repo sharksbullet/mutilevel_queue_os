@@ -16,7 +16,7 @@ const ReadyQueue = (props) => {
    
   </thead>
   <tbody>
-  {process?.map((it,index)=>{
+  {readyRobin?.map((it,index)=>{
     
     if(it?.state === 0){
       return (
@@ -37,7 +37,7 @@ const ReadyQueue = (props) => {
     </tr>
   </thead>
   <tbody>
-  {readyFcfs?.map((it,index)=>{
+  {process?.map((it,index)=>{
     if(it?.state === 1){
       return(
       <tr key={index}>
