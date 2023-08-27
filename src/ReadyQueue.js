@@ -1,5 +1,5 @@
 import React,{useContext} from 'react'
-import { Contro } from './Contro'
+
 const ReadyQueue = (props) => {
   const {process,addPro,readyFcfs,readyRobin}=props;
   

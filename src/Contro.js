@@ -1,6 +1,6 @@
 import { wait } from '@testing-library/user-event/dist/utils';
 import React, { createContext,useState,useEffect } from 'react';
-import ReadyQueue from './ReadyQueue';
+// import ReadyQueue from './ReadyQueue';
 import Tablequeueu from './Tablequeue';
 let Count=0;
 let tQuantum =5;
@@ -150,14 +150,7 @@ const Contro = () => {
         awg={awg}
         
     />
-   <ReadyQueue
-    clock={clock}
-    process={process}
-    terminate={terminate}
-    readyFcfs={readyFcfs}
-    addPro={addPro}
-    readyRobin={readyRobin}
-   />
+   
    </>
   );
 };
