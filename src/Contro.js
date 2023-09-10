@@ -1,18 +1,12 @@
-import { wait } from '@testing-library/user-event/dist/utils';
 import React, { createContext,useState,useEffect } from 'react';
-// import ReadyQueue from './ReadyQueue';
 import Tablequeueu from './Tablequeue';
 let Count=0;
-let tQuantum =5;
 let itime = 0  ;
 let index =0;
-let set =0.80;
-const Controller = createContext();
+// const Controller = createContext();
 const Contro = () => {
     const [process, setProcess] = useState([]);
     const [clock,setClock]=useState(0);
-    const [readyRobin,setReadyRobin] = useState([]);
-    const [readyFcfs, setReadyFcfs] = useState([]);
     const [allprocess, setAllprocess] = useState(0);
     const [terminate, setTerminate] = useState([]);
     const [awg,setAwg]=useState(0);
@@ -29,19 +23,6 @@ const Contro = () => {
           ct++
         }
         setAwg(sum/ct) 
-      }
-    }
-   }
-   function Ready(){
-    let readys = [...readyRobin]
-    let p = 0.80;
-    if (process.length !== 0) {
-      for (let g = 0; g < process.length; g++) {
-       if (tQuantum === process[g].ex_time &&process[g].status === "Ready") {
-        readys.push(process[g])
-       } 
-        process.sort((a,b)=>a.bu_time-b.bu_time)
-        setReadyRobin(readys)
       }
     }
    }
@@ -93,16 +74,13 @@ const Contro = () => {
 
            
              if (process[index].state === 0) {
-              if (itime < tQuantum ) { 
+              if (itime <  process[index].ex_time ) { 
                 process[index].status = "Running"
                  itime++
-                 Ready()         
+                         
               }
               else{
                 itime=0
-                let readyfcfs_q = [...readyFcfs]
-                readyfcfs_q.push(process[index])
-                setReadyFcfs(readyfcfs_q)
                 process[index].state = 1
                 process[index].status = "Ready"
                 if (index < process.length - 1) {
@@ -118,20 +96,16 @@ const Contro = () => {
               process[index].status = "Running"
               if (process[index].ex_time === process[index].bu_time) {
                     process[index].status = "Terminate"
-                    readyFcfs.shift()
+                    
               }
             }
           }
           else{
             index++
           }
-          
          }
          Awg()
-         
       }, [clock])
-      
-
     useEffect(() => {
         setTimeout(()=>{
           setClock(clock+1)

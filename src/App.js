@@ -1,5 +1,5 @@
 import './App.css';
-import ReadyQueue from './ReadyQueue';
+
 import Contro from './Contro';
 function App() {
   return (
